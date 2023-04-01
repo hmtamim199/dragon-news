@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -11,12 +11,26 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 import BrandCarusal from "../BrandCarusal/BrandCarusal";
+import { AuthContext } from "../../../Context/AuthProvider";
+import { GoogleAuthProvider } from "firebase/auth";
+
 
 const RightSideNav = () => {
+  const { providerLogin } = useContext(AuthContext)
+  const googleProvider = new GoogleAuthProvider()
+
+  const handleGoogleSingin = () => {
+    providerLogin(googleProvider)
+      .then(result => {
+        const user = result.user;
+        console.log(user)
+      })
+      .catch(error => console.error(error))
+  }
   return (
     <div>
       <ButtonGroup vertical>
-        <Button className="mb-3" variant="outline-primary">
+        <Button onClick={handleGoogleSingin} className="mb-3" variant="outline-primary">
           <FaGoogle></FaGoogle> Login via google
         </Button>
         <Button variant="outline-dark">
