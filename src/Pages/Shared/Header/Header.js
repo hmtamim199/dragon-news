@@ -6,6 +6,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
 import LeftSideNav from "../LeftSideNav/LeftSideNav";
+import { Image } from "react-bootstrap";
+import { FaUser } from "react-icons/fa";
 
 const Header = () => {
   const { user } = useContext(AuthContext)
@@ -33,7 +35,15 @@ const Header = () => {
           <Nav>
             <Nav.Link href="#deets">{user?.displayName}</Nav.Link>
             <Nav.Link eventKey={2} href="#memes">
-              Dank memes
+              {user?.photoURL ?
+                <Image
+                  roundedCircle
+                  src={user?.photoURL}
+                  style={{ height: '30px' }}
+                ></Image>
+                :
+                <FaUser></FaUser>
+              }
             </Nav.Link>
           </Nav>
           <div className="d-lg-none">
