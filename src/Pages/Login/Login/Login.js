@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../../../Context/AuthProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 const Login = () => {
   const { singin } = useContext(AuthContext)
@@ -22,7 +23,12 @@ const Login = () => {
         const user = result.user;
         console.log(user)
         form.reset()
-        Navigate(from, { replace: true })
+        if (user.emailVerified) {
+          Navigate(from, { replace: true })
+        }
+        else {
+          toast.error('please verify your email')
+        }
       })
       .catch(error => {
         console.error(error)
